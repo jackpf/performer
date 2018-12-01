@@ -78,6 +78,20 @@ public:
         }
     }
 
+    virtual void onFingerDown(FingerEvent &e) override {
+        if (!_pressed && isInside(e.pos())) {
+            setPressed(true);
+            e.consume();
+        }
+    }
+
+    virtual void onFingerUp(FingerEvent &e) override {
+        if (_pressed && isInside(e.pos())) {
+            setPressed(false);
+            e.consume();
+        }
+    }
+
 private:
     void setPressed(bool pressed) {
         if (pressed != _pressed) {

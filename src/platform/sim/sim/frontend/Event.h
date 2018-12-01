@@ -107,4 +107,23 @@ private:
     Vector2i _scroll;
 };
 
+class FingerEvent : public Event {
+public:
+    FingerEvent(const Vector2f &pos, int fingerId) :
+        _pos(pos),
+        _fingerId(fingerId)
+    {}
+
+    const Vector2f &pos() const { return _pos; }
+    int fingerId() const { return _fingerId; }
+
+    static FingerEvent fromSDL(const SDL_TouchFingerEvent &e, const Vector2i &size) {
+        return FingerEvent(Vector2f(e.x * size.x(), e.y * size.y()), e.fingerId);
+    }
+
+private:
+    Vector2f _pos;
+    int _fingerId;
+};
+
 } // namespace sim

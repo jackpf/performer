@@ -4,7 +4,8 @@ namespace sim {
 
 Window::Window(const std::string &title, const Vector2i &size) :
     _window(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size.x(), size.y(), SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI)),
-    _renderer(_window)
+    _renderer(_window),
+    _size(size)
 {
 }
 
@@ -36,6 +37,15 @@ void Window::update() {
             break;
         case SDL_MOUSEWHEEL:
             handleEvent(MouseWheelEvent::fromSDL(event.wheel), [] (Widget &widget, MouseWheelEvent &e) { widget.onMouseWheel(e); } );
+            break;
+        case SDL_FINGERMOTION:
+            std::cout << "finger motion " << event.tfinger.x << " " << event.tfinger.y << std::endl;
+            break;
+        case SDL_FINGERDOWN:
+            handleEvent(FingerEvent::fromSDL(event.tfinger, _size), [] (Widget &widget, FingerEvent &e) { widget.onFingerDown(e); } );
+            break;
+        case SDL_FINGERUP:
+            handleEvent(FingerEvent::fromSDL(event.tfinger, _size), [] (Widget &widget, FingerEvent &e) { widget.onFingerUp(e); } );
             break;
         }
     }

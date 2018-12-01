@@ -50,6 +50,8 @@ public:
     virtual void onMouseDown(MouseButtonEvent &e) {}
     virtual void onMouseUp(MouseButtonEvent &e) {}
     virtual void onMouseWheel(MouseWheelEvent &e) {}
+    virtual void onFingerDown(FingerEvent &e) {}
+    virtual void onFingerUp(FingerEvent &e) {}
 
 protected:
     Vector2f _pos;
